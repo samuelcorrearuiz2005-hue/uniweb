@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar producto</title>
+    <!-- Fuente principal del proyecto -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset general */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Fondo y tipografía base */
+        body { font-family: 'DM Sans', sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; padding: 2.5rem 1rem; }
+        /* Contenedor centrado */
+        .container { max-width: 480px; margin: 0 auto; }
+        header { margin-bottom: 2rem; }
+        /* Enlace para volver a la lista */
+        .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: #666; text-decoration: none; margin-bottom: 1rem; }
+        .back-link:hover { color: #111; }
+        h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; color: #111; }
+        /* Tarjeta del formulario */
+        .card { background: #fff; border-radius: 14px; border: 1px solid #e8e8e5; padding: 1.75rem; }
+        /* Cada campo del formulario */
+        .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+        label { font-size: 0.85rem; font-weight: 500; color: #444; }
+        /* Estilos de los inputs */
+        input[type="text"], input[type="number"] { width: 100%; padding: 0.65rem 0.85rem; font-family: inherit; font-size: 0.95rem; color: #111; background: #fafaf8; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        input:focus { border-color: #aaa; box-shadow: 0 0 0 3px rgba(0,0,0,0.05); background: #fff; }
+        /* Botón de guardar */
+        .btn-submit { width: 100%; margin-top: 0.5rem; padding: 0.7rem; background: #111; color: #fff; font-family: inherit; font-size: 0.95rem; font-weight: 500; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-submit:hover { background: #333; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <!-- Enlace de regreso -->
+        <a href="/productos/" class="back-link">← Volver a la lista</a>
+        <h1>Editar producto</h1>
+    </header>
+    <div class="card">
+        <!-- Formulario UPDATE: envía los datos editados al mismo URL -->
+        <form method="post">
+            {% csrf_token %} <!-- Token de seguridad requerido por Django -->
+            <div class="field">
+                <label for="nombre">Nombre</label>
+                <!-- Precarga el nombre actual del producto -->
+                <input type="text" id="nombre" name="nombre" value="{{ producto.nombre }}" required>
+            </div>
+            <div class="field">
+                <label for="precio">Precio</label>
+                <!-- Precarga el precio actual del producto -->
+                <input type="number" id="precio" name="precio" step="0.01" min="0" value="{{ producto.precio }}" required>
+            </div>
+            <button type="submit" class="btn-submit">Guardar cambios</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

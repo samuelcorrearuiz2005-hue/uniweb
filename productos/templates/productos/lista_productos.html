@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de productos</title>
+    <!-- Fuente principal del proyecto -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset general */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Fondo y tipografía base */
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f5f4f0;
+            color: #1a1a1a;
+            min-height: 100vh;
+            padding: 2.5rem 1rem;
+        }
+        /* Contenedor centrado */
+        .container { max-width: 680px; margin: 0 auto; }
+        /* Encabezado con título y botón */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; color: #111; }
+        /* Botón registrar nuevo producto */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.55rem 1.1rem;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+        .btn-primary:hover { background: #333; }
+        /* Mensaje cuando no hay productos */
+        .empty {
+            text-align: center;
+            padding: 3.5rem 1rem;
+            color: #888;
+            font-size: 0.95rem;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px dashed #ddd;
+        }
+        /* Lista de tarjetas de productos */
+        .product-list { display: flex; flex-direction: column; gap: 10px; }
+        /* Tarjeta individual de producto */
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e8e8e5;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: box-shadow 0.15s;
+        }
+        .product-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        /* Nombre y precio del producto */
+        .product-info { display: flex; flex-direction: column; gap: 2px; }
+        .product-name { font-weight: 500; font-size: 0.975rem; color: #111; }
+        .product-price { font-size: 0.875rem; color: #555; }
+        /* Botón eliminar */
+        .btn-delete {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #b84040;
+            background: #fdf1f1;
+            border: 1px solid #f5c8c8;
+            border-radius: 7px;
+            padding: 0.4rem 0.8rem;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+        .btn-delete:hover { background: #fbe0e0; }
+        /* Contador de productos */
+        .count { font-size: 0.8rem; color: #999; margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Productos</h1>
+        <!-- Enlace para registrar un nuevo producto -->
+        <a href="/productos/registro/" class="btn-primary">+ Nuevo producto</a>
+    </header>
+
+    <!-- Verifica si hay productos registrados -->
+    {% if productos %}
+        <p class="count">{{ productos|length }} producto{% if productos|length != 1 %}s{% endif %} registrado{% if productos|length != 1 %}s{% endif %}</p>
+        <div class="product-list">
+            <!-- Itera sobre cada producto -->
+            {% for producto in productos %}
+            <div class="product-card">
+                <div class="product-info">
+                    <!-- Nombre y precio del producto -->
+                    <span class="product-name">{{ producto.nombre }}</span>
+                    <span class="product-price">${{ producto.precio }}</span>
+                </div>
+                <!-- Enlace para editar el producto -->
+                <a href="/productos/editar/{{ producto.id }}/">Editar</a>
+                <!-- Enlace para eliminar el producto -->
+                <a href="/productos/eliminar/{{ producto.id }}/" class="btn-delete">Eliminar</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Mensaje si no hay productos -->
+        <div class="empty">
+            <p>No hay productos registrados aún.</p>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
